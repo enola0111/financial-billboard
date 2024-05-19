@@ -118,10 +118,10 @@ KBar_dic['amount']=np.array(KBar_amount_list)
 
 Date = start_date.strftime("%Y-%m-%d")
 
-st.subheader("設定一根 K 棒的時間長度(小時)")
-cycle_duration_hours= st.number_input('輸入一根 K 棒的時間長度(單位:小時, 一日=24小時)',key="KBar_duration_hours", min_value=1, max_value=24)
-cycle_duration_minutes = int(cycle_duration_hours * 60)
-cycle_duration = 24 * 60  ## 可以改成你想要的 KBar 週期
+st.subheader("設定一根 K 棒的時間長度(星期)")
+cycle_duration_weeks = st.number_input('輸入一根 K 棒的時間長度(單位:星期)', key="KBar_duration_weeks", min_value=1)
+cycle_duration_minutes = int(cycle_duration_weeks * 7 * 1440)  # 每星期有 7 天，每天有 1440 分鐘
+cycle_duration_minutes = 2 * 7 * 1440  # 這行代碼將 K 棒週期設置為固定值，例如 2 星期
 # KBar = indicator_f_Lo2.KBar(Date,'time',2)
 KBar = indicator_forKBar_short.KBar(Date, cycle_duration_minutes)    ## 設定cycle_duration可以改成你想要的 KBar 週期
 
