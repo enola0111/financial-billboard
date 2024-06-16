@@ -84,10 +84,10 @@ KBar_dic['volume'] = KBar.TAKBar['volume']
 KBar_df = pd.DataFrame(KBar_dic)
 
 # 設定長短移動平均線的 K棒 長度
-st.subheader("設定計算長移動平均線(MA)的 K 棒數目(整數, 例如 10)")
-LongMAPeriod = st.slider('選擇一個整數', 0, 100, 10)
-st.subheader("設定計算短移動平均線(MA)的 K 棒數目(整數, 例如 2)")
-ShortMAPeriod = st.slider('選擇一個整數', 0, 100, 2)
+st.subheader("設定計算長移動平均線(MA)的 K 棒數目")
+LongMAPeriod = st.selectbox('選擇一個整數', list(range(201)), index=10)
+st.subheader("設定計算短移動平均線(MA)的 K 棒數目")
+ShortMAPeriod = st.selectbox('選擇一個整數', list(range(201)), index=2)
 
 KBar_df['MA_long'] = KBar_df['close'].rolling(window=LongMAPeriod).mean()
 KBar_df['MA_short'] = KBar_df['close'].rolling(window=ShortMAPeriod).mean()
@@ -95,10 +95,10 @@ KBar_df['MA_short'] = KBar_df['close'].rolling(window=ShortMAPeriod).mean()
 last_nan_index_MA = KBar_df['MA_long'][::-1].index[KBar_df['MA_long'][::-1].apply(pd.isna)][0]
 
 # RSI策略
-st.subheader("設定計算長RSI的 K 棒數目(整數, 例如 10)")
-LongRSIPeriod = st.slider('選擇一個整數', 0, 1000, 10)
-st.subheader("設定計算短RSI的 K 棒數目(整數, 例如 2)")
-ShortRSIPeriod = st.slider('選擇一個整數', 0, 1000, 2)
+st.subheader("設定計算長RSI的 K 棒數目")
+LongRSIPeriod = st.selectbox('選擇一個整數', list(range(201)), index=10, key='LongRSI')
+st.subheader("設定計算短RSI的 K 棒數目")
+ShortRSIPeriod = st.selectbox('選擇一個整數', list(range(201)), index=2, key='ShortRSI')
 
 def calculate_rsi(df, period=14):
     delta = df['close'].diff()
