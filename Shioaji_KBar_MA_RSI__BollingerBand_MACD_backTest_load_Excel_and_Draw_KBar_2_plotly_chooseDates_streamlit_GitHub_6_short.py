@@ -55,7 +55,7 @@ KBar_amount_list = list(KBar_dic['amount'].values())
 KBar_dic['amount'] = np.array(KBar_amount_list)
 
 # 設定K棒時間長度
-st.subheader("設定一根 K 棒的時間長度")
+st.subheader(" K 棒的時間長度")
 timeframe = st.selectbox('選擇時間周期', ('日', '周', '月'))
 timeframe_mapping = {'日': 1440, '周': 10080, '月': 43200}
 cycle_duration = timeframe_mapping[timeframe]
