@@ -12,7 +12,7 @@ from plotly.subplots import make_subplots
 # 設定頁面樣式
 html_temp = """
         <div style="background-color:#3872fb;padding:10px;border-radius:10px">
-        <h1 style="color:white;text-align:center;">金融資料視覺化呈現 (金融看板) </h1>
+        <h1 style="color:white;text-align:center;">金融看板 </h1>
         <h2 style="color:white;text-align:center;">Financial Dashboard </h2>
         </div>
         """
@@ -156,9 +156,7 @@ def main():
         fig2.layout.yaxis2.showgrid = True
         st.plotly_chart(fig2, use_container_width=True)
 
-    # 顯示資料表
-    with st.expander("查看資料表"):
-        st.dataframe(KBar_df)
+   
 
 # 執行主程式
 if __name__ == "__main__":
