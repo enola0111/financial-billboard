@@ -94,7 +94,7 @@ KBar_df['MA_short'] = KBar_df['close'].rolling(window=ShortMAPeriod).mean()
 
 last_nan_index_MA = KBar_df['MA_long'][::-1].index[KBar_df['MA_long'][::-1].apply(pd.isna)][0]
 
-# RSI策略
+# 繪製K線圖和RSI
 st.subheader("設定計算長RSI的 K 棒數目")
 LongRSIPeriod = st.selectbox('選擇一個整數', list(range(201)), index=10, key='LongRSI')
 st.subheader("設定計算短RSI的 K 棒數目")
@@ -120,47 +120,17 @@ st.subheader("畫圖")
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 
-# K線圖, 移動平均線 MA
-with st.expander("K線圖, 移動平均線"):
-    fig1 = make_subplots(specs=[[{"secondary_y": True}]])
-    fig1.add_trace(go.Candlestick(x=KBar_df['Time'], open=KBar_df['Open'], high=KBar_df['High'],
-                                  low=KBar_df['Low'], close=KBar_df['Close'], name='K線'), secondary_y=True)
-    fig1.add_trace(go.Bar(x=KBar_df['Time'], y=KBar_df['Volume'], name='成交量', marker=dict(color='black')),
-                   secondary_y=False)
-    fig1.add_trace(go.Scatter(x=KBar_df['Time'][last_nan_index_MA + 1:], y=KBar_df['MA_long'][last_nan_index_MA + 1:],
-                              mode='lines', line=dict(color='orange', width=2), name=f'{LongMAPeriod}-根 K棒 移動平均線'),
-                   secondary_y=True)
-    fig1.add_trace(go.Scatter(x=KBar_df['Time'][last_nan_index_MA + 1:], y=KBar_df['MA_short'][last_nan_index_MA + 1:],
-                              mode='lines', line=dict(color='pink', width=2), name=f'{ShortMAPeriod}-根 K棒 移動平均線'),
-                   secondary_y=True)
-    fig1.layout.yaxis2.showgrid = True
-    st.plotly_chart(fig1, use_container_width=True)
+# 繪製K線圖, 移動平均線 MA 和 RSI
+with st.expander("K線圖, 移動平均線和RSI"):
+    fig = make_subplots(rows=2, cols=1, shared_xaxes=True, vertical_spacing=0.02,
+                        subplot_titles=('K線圖和移動平均線', 'RSI指標'))
 
-# K線圖, RSI
-with st.expander("K線圖, 長短 RSI"):
-    fig2 = make_subplots(specs=[[{"secondary_y": True}]])
-    fig2.add_trace(go.Candlestick(x=KBar_df['Time'], open=KBar_df['Open'], high=KBar_df['High'],
-                                  low=KBar_df['Low'], close=KBar_df['Close'], name='K線'), secondary_y=True)
-    fig2.add_trace(go.Bar(x=KBar_df['Time'], y=KBar_df['Volume'], name='成交量', marker=dict(color='black')),
-                   secondary_y=False)
-    fig2.add_trace(go.Scatter(x=KBar_df['Time'][last_nan_index_RSI + 1:], y=KBar_df['RSI_long'][last_nan_index_RSI + 1:],
-                              mode='lines', line=dict(color='orange', width=2), name=f'{LongRSIPeriod}-根 K棒 RSI'),
-                   secondary_y=True)
-    fig2.add_trace(go.Scatter(x=KBar_df['Time'][last_nan_index_RSI + 1:], y=KBar_df['RSI_short'][last_nan_index_RSI + 1:],
-                              mode='lines', line=dict(color='pink', width=2), name=f'{ShortRSIPeriod}-根 K棒 RSI'),
-                   secondary_y=True)
-    fig2.add_trace(go.Scatter(x=KBar_df['Time'][last_nan_index_RSI + 1:], y=KBar_df['RSI_Middle'][last_nan_index_RSI + 1:],
-                              mode='lines', line=dict(color='blue', width=1), name='中線 50'),
-                   secondary_y=True)
-    fig2.layout.yaxis2.showgrid = True
-    st.plotly_chart(fig2, use_container_width=True)
-
-
-
-# 預設時間區間 2022-01-03 到 2022-11-18
-# 起始日期 '2022-01-03'
-# 結束日期 '2022-11-18'
-
+    # 添加K線圖和移動平均線
+    fig.add_trace(go.Candlestick(x=KBar_df['Time'], open=KBar_df['Open'], high=KBar_df['High'],
+                                 low=KBar_df['Low'], close=KBar_df['Close'], name='K線'), row=1, col=1)
+    fig.add_trace(go.Bar(x=KBar_df['Time'], y=KBar_df['Volume'], name='成交量', marker=dict(color='black')),
+                  row=1, col=1)
+    fig.add_trace(go.Scatter(x=KBar_df['Time'][last_nan_index_MA + 1:], y=KBar_df
 
 
 
