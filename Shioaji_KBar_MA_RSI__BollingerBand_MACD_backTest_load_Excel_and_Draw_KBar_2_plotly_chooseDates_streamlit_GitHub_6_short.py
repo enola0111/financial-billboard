@@ -206,8 +206,6 @@ last_nan_index_RSI = KBar_df['RSI_long'][::-1].index[KBar_df['RSI_long'][::-1].a
 
 
 
- KBar_RSI_df=pd.DataFrame(KBar_dic)
-
 
 
 KBar_df.columns = [ i[0].upper()+i[1:] for i in KBar_df.columns ]
