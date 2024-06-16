@@ -159,8 +159,6 @@ with st.expander("K線圖, 移動平均線和RSI"):
     # 顯示圖表
     st.plotly_chart(fig, use_container_width=True)
 
-with st.expander("查看資料表"):
-    st.dataframe(KBar_df)
 
 # 預設時間區間 2022-01-03 到 2022-11-18
 # 起始日期 '2022-01-03'
