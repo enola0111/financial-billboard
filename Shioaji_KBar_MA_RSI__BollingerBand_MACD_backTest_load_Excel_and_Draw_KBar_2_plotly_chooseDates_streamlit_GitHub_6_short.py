@@ -86,9 +86,9 @@ KBar_dic['volume'] = KBar.TAKBar['volume']
 KBar_df = pd.DataFrame(KBar_dic)
 
 # 設定長短移動平均線的 K棒 長度
-st.subheader("設定計算長移動平均線(MA)的 K 棒數目")
+st.subheader("長移動平均線(MA)的 K 棒數目")
 LongMAPeriod = st.selectbox('選擇一個整數', list(range(201)), index=10)
-st.subheader("設定計算短移動平均線(MA)的 K 棒數目")
+st.subheader("短移動平均線(MA)的 K 棒數目")
 ShortMAPeriod = st.selectbox('選擇一個整數', list(range(201)), index=2)
 
 KBar_df['MA_long'] = KBar_df['close'].rolling(window=LongMAPeriod).mean()
@@ -154,7 +154,8 @@ with st.expander("K線圖, 移動平均線和RSI"):
     # 設置每個子圖的y軸標題
     fig.update_yaxes(title_text='價格', secondary_y=True, row=1, col=1)
     fig.update_yaxes(title_text='RSI', secondary_y=True, row=2, col=1)
-
+     # 設置標題的顏色
+    fig.update_layout(title=dict(text="K線圖, 移動平均線和RSI", font=dict(color="black")), title_x=0.5)
     # 顯示圖表
     st.plotly_chart(fig, use_container_width=True)
 
